@@ -132,7 +132,7 @@ export default function SellerProfile() {
     ? auctions 
     : auctions.filter(auction => auction.status === auctionFilter);
 
-  // Payment data
+  // Payment data with editable status
   const [payments, setPayments] = useState([
     {
       id: "1",
@@ -211,6 +211,32 @@ export default function SellerProfile() {
   const viewPaymentDetails = (payment) => {
     setSelectedPayment(payment);
     setIsPaymentDetailOpen(true);
+  };
+
+  // Update payment status
+  const updatePaymentStatus = (paymentId, newStatus) => {
+    setPayments(payments.map(payment => {
+      if (payment.id === paymentId) {
+        const updatedPayment = {
+          ...payment,
+          status: newStatus,
+          paymentDate: newStatus === "paid" ? new Date().toISOString() : payment.paymentDate
+        };
+        
+        // Update selected payment if it's the one being edited
+        if (selectedPayment && selectedPayment.id === paymentId) {
+          setSelectedPayment(updatedPayment);
+        }
+        
+        return updatedPayment;
+      }
+      return payment;
+    }));
+    
+    toast.success("Payment status updated", {
+      description: `Status changed to ${newStatus}`,
+      icon: <Check className="w-5 h-5" />
+    });
   };
 
   if (!user) {
@@ -356,41 +382,6 @@ export default function SellerProfile() {
                     </div>
                     
                     <p className="text-muted-foreground text-center text-sm mb-4">{profile.bio}</p>
-                  </div>
-                </div>
-              </motion.div>
-
-              {/* Seller Stats */}
-              <motion.div 
-                whileHover={{ y: -3 }}
-                className="bg-card rounded-2xl shadow-xl overflow-hidden border border-border/50 mt-6"
-              >
-                <div className="bg-gradient-to-r from-primary/10 to-secondary/10 p-5 border-b border-border/50">
-                  <h3 className="text-lg font-medium flex items-center gap-2">
-                    <BarChart2 className="w-5 h-5 text-primary" />
-                    Seller Stats
-                  </h3>
-                </div>
-                <div className="p-5 space-y-4">
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm text-muted-foreground">Total Sales</span>
-                    <span className="font-medium">${sellerStats.totalSales.toLocaleString()}</span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm text-muted-foreground">Auctions Completed</span>
-                    <span className="font-medium">{sellerStats.auctionsCompleted}</span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm text-muted-foreground">Active Auctions</span>
-                    <span className="font-medium">{sellerStats.activeAuctions}</span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm text-muted-foreground">Avg Sale Price</span>
-                    <span className="font-medium">${sellerStats.avgSalePrice.toLocaleString()}</span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm text-muted-foreground">Total Bidders</span>
-                    <span className="font-medium">{sellerStats.totalBidders}</span>
                   </div>
                 </div>
               </motion.div>
@@ -693,9 +684,6 @@ export default function SellerProfile() {
                             <div className="mt-4 flex gap-2">
                               <Button variant="outline" size="sm" className="text-xs h-8">
                                 View Details
-                              </Button>
-                              <Button size="sm" className="text-xs h-8">
-                                {auction.status === "completed" ? "Relist" : "Manage"}
                               </Button>
                             </div>
                           </div>
@@ -1264,6 +1252,37 @@ export default function SellerProfile() {
                     <p><span className="font-medium">Dimensions:</span> {selectedPayment.itemDetails.dimensions}</p>
                     <p><span className="font-medium">Materials:</span> {selectedPayment.itemDetails.materials}</p>
                     <p><span className="font-medium">Year Created:</span> {selectedPayment.itemDetails.yearCreated}</p>
+                  </div>
+                </div>
+
+                {/* Payment Status Update Section */}
+                <div className="pt-4 border-t border-border/50">
+                  <Label className="text-muted-foreground mb-3 block">Update Payment Status</Label>
+                  <div className="flex gap-3">
+                    <Button
+                      variant="outline"
+                      onClick={() => updatePaymentStatus(selectedPayment.id, "paid")}
+                      className="flex-1"
+                    >
+                      <Check className="w-4 h-4 mr-2" />
+                      Mark as Paid
+                    </Button>
+                    <Button
+                      variant="outline"
+                      onClick={() => updatePaymentStatus(selectedPayment.id, "pending")}
+                      className="flex-1"
+                    >
+                      <Clock className="w-4 h-4 mr-2" />
+                      Mark as Pending
+                    </Button>
+                    <Button
+                      variant="outline"
+                      onClick={() => updatePaymentStatus(selectedPayment.id, "failed")}
+                      className="flex-1"
+                    >
+                      <AlertTriangle className="w-4 h-4 mr-2" />
+                      Mark as Failed
+                    </Button>
                   </div>
                 </div>
               </div>

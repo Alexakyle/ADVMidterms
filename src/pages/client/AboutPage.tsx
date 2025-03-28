@@ -809,14 +809,18 @@ const AboutPage = () => {
               {
                 title: "Competitive Bidding Experience",
                 icon: <Gavel className="text-gallery-accent" size={20} />,
-                content: "Auctions run for 7-14 days with real-time bidding updates. Our platform generates excitement with countdown timers, bid notifications, and collector interest indicators. The transparent system shows current high bids while protecting bidder identities until closing.",
-                features: ["Real-time updates", "Countdown timers", "Bid notifications"]
+                content: "Auctions begin immediately when listed and run for the duration set by the seller (typically 7-14 days). Our platform provides real-time bidding updates from the moment the auction goes live. Watch the excitement build with dynamic countdown timers, instant bid notifications, and visible collector interest indicators.",
+                features: [
+                  "Starts when seller lists item",
+                  "Real-time bidding updates",
+                  "Countdown timer",
+                ]
               },
               {
-                title: "Seamless Transaction & Delivery",
+                title: "Secure Post-Auction Process",
                 icon: <Globe className="text-gallery-accent" size={20} />,
-                content: "When the auction concludes, we facilitate secure payment through multiple methods and handle all shipping logistics with white-glove service. Artists receive prompt payment after collector approval, while collectors benefit from our authenticity guarantee and professional packaging.",
-                features: ["Secure payments", "Global shipping", "White-glove service"]
+                content: "Once the auction concludes, we ensure a smooth transition with secure payment processing and immediate fund release to artists. Collectors benefit from our authenticity guarantee and direct coordination with artists for pickup or local arrangements",
+                features: ["Instant payment processing", "Authenticity guarantee", "Artist-collector coordination"]
               }
             ].map((item, index) => (
               <motion.div 

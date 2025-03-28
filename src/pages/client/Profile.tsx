@@ -268,47 +268,6 @@ export default function ClientProfile() {
                   </div>
                 </div>
               </motion.div>
-
-              {/* Client Stats */}
-              <motion.div 
-                whileHover={{ y: -3 }}
-                className="bg-card rounded-2xl shadow-xl overflow-hidden border border-border/50 mt-6"
-              >
-                <div className="bg-gradient-to-r from-primary/10 to-secondary/10 p-5 border-b border-border/50">
-                  <h3 className="text-lg font-medium flex items-center gap-2">
-                    <Trophy className="w-5 h-5 text-primary" />
-                    Collection Stats
-                  </h3>
-                </div>
-                <div className="p-5 space-y-4">
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm text-muted-foreground">Total Spent</span>
-                    <span className="font-medium">${clientStats.totalSpent.toLocaleString()}</span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm text-muted-foreground">Auctions Won</span>
-                    <span className="font-medium">{clientStats.auctionsWon}</span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm text-muted-foreground">Items in Collection</span>
-                    <span className="font-medium">{clientStats.itemsInCollection}</span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm text-muted-foreground">Watchlist Items</span>
-                    <span className="font-medium">{clientStats.watchlistItems}</span>
-                  </div>
-                  <div className="flex flex-col">
-                    <span className="text-sm text-muted-foreground">Favorite Artists</span>
-                    <div className="flex flex-wrap gap-1 mt-1">
-                      {clientStats.favoriteArtists.map(artist => (
-                        <Badge key={artist} variant="outline" className="text-xs">
-                          {artist}
-                        </Badge>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
             </div>
             
             {/* Main Content */}
